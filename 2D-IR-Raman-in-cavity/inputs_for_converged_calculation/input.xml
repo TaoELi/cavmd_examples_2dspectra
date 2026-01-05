@@ -1,0 +1,46 @@
+<simulation verbosity='high'>
+  <output prefix='simu_nve_1'>
+    <checkpoint stride='1000' filename='chk' overwrite='false'/>
+    <trajectory filename='dip' stride='4' extra_type='dipole'> extras </trajectory>
+    <trajectory filename='pol' stride='4' extra_type='polarizability'> extras </trajectory>
+    <trajectory filename='dip_der' stride='1000' extra_type='dipole_derivative'> extras </trajectory>
+  </output>
+  <total_steps>100000</total_steps>
+  <prng>
+    <seed>31258</seed>
+  </prng>
+  <ffcavphsocket name='lammps' mode='unix' pbc='True'>
+    <address> h2o.E0_7e-4.traj_1 </address>
+    <latency> 0.01 </latency>
+    <apply_photon> True </apply_photon>
+    <E0> 7e-4 </E0>
+    <omega_c units='inversecm'> 3550.0 </omega_c>
+    <charge_array> [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] </charge_array>
+  </ffcavphsocket>
+  <ffcavphsocket name='dipole' mode='unix' pbc="false">
+    <address> h2o-dipole_7e-4.traj_1 </address>
+    <latency> 0.01 </latency>
+    <apply_photon> True </apply_photon>
+    <E0> 7e-4 </E0>
+    <omega_c units='inversecm'> 3550.0 </omega_c>
+    <charge_array> [] </charge_array>
+  </ffcavphsocket>
+  <system>
+    <initialize nbeads='1'>
+      <file mode='chk'> init_nve_1.checkpoint </file>
+      <velocities mode="thermal" units="kelvin"> 280 </velocities>
+    </initialize>
+    <forces>
+      <force forcefield='lammps'> </force>
+      <force forcefield='dipole'> </force>
+    </forces>
+    <ensemble>
+      <temperature units='kelvin'> 280 </temperature>
+    </ensemble>
+    <motion mode='dynamics'>
+      <dynamics mode='nve' splitting='baoab'>
+        <timestep units='femtosecond'> 0.25 </timestep>
+      </dynamics>
+    </motion>
+  </system>
+</simulation>
